@@ -7,8 +7,8 @@ const App = () => {
     <View className="flex flex-1 items-center justify-center">
       <Text className="text-3xl  font-pblack">{"Futura"}</Text>
       <StatusBar style="auto" />
-      <Link href="/login" style={{color: "blue"}}>
-        Go to Login page
+      <Link href="/home" style={{color: "blue"}}>
+        Go to Home
       </Link>
     </View>
   );

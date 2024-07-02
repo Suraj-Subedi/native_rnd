@@ -5,7 +5,7 @@ import {StyleSheet, Text, View} from "react-native";
 const App = () => {
   return (
     <View className="flex flex-1 items-center justify-center">
-      <Text className="text-3xl text-rose-500">{"Futura"}</Text>
+      <Text className="text-3xl  font-pblack">{"Futura"}</Text>
       <StatusBar style="auto" />
       <Link href="/profile" style={{color: "blue"}}>
         Go to profile

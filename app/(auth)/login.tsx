@@ -1,0 +1,71 @@
+import {View, Text, Image, KeyboardAvoidingView} from "react-native";
+import React, {useState} from "react";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {ScrollView} from "react-native";
+import {images} from "@/constants";
+import TextFormField from "@/components/TextFormField";
+import CustomButton from "@/components/CustomButton";
+import {Link} from "expo-router";
+
+const Login = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitForm = () => {};
+
+  return (
+    <SafeAreaView className="bg-primary h-full">
+      <ScrollView automaticallyAdjustKeyboardInsets={true}>
+        <View className="w-full justify-center h-full px-4 my-6">
+          <Image
+            source={images.logo}
+            resizeMode="contain"
+            className="w-[115px] h-[35px]"
+          />
+          <Text className="font-psemibold text-2xl mt-10 text-white">
+            Login to Futura
+          </Text>
+          <TextFormField
+            label="Email Address"
+            placeholder="Enter your email address"
+            otherStyles="mt-10"
+            keyboardType="email-address"
+            value={form.email}
+            onChangeText={(value) => setForm({...form, email: value})}
+            returnKeyType="next"
+          />
+
+          <TextFormField
+            label="Password"
+            placeholder="Enter your password"
+            otherStyles="mt-5"
+            secureTextEntry
+            value={form.password}
+            onChangeText={(value) => setForm({...form, password: value})}
+            returnKeyType="done"
+          />
+          <CustomButton
+            containerStyles="mt-7"
+            onPress={submitForm}
+            title={"Login"}
+            isLoading={isSubmitting}
+          />
+          <View className="justify-center">
+            <Text className="text-gray-100 mt-7 text-center text-sm font-pregular">
+              Don't have an account?{" "}
+              <Link href="/register">
+                <Text className="text-secondary-200">Sign Up</Text>
+              </Link>
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+export default Login;

@@ -44,7 +44,7 @@ const App = () => {
           <CustomButton
             title="Continue with Email"
             onPress={() => {
-              router.push("/register");
+              router.push("/login");
             }}
             containerStyles="w-full mt-10"
           />

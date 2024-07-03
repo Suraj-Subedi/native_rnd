@@ -3,13 +3,13 @@ import {images} from "@/constants";
 import {useGlobalContext} from "@/context/GlobalProvider";
 import {Link, Redirect, router} from "expo-router";
 import {StatusBar} from "expo-status-bar";
-import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Image, ScrollView, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const App = () => {
   const globalContext = useGlobalContext();
 
-  if (!!globalContext?.isLoading && globalContext?.isLoggedIn) {
+  if (!globalContext?.isLoading && globalContext?.isLoggedIn) {
     return <Redirect href={"/home"} />;
   }
 

@@ -1,7 +1,8 @@
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from "react-native";
-import React, {FC, ReactNode} from "react";
+import {Image, ImageSourcePropType, Text, View} from "react-native";
+import React, {FC} from "react";
 import {Tabs} from "expo-router";
 import {icons} from "@/constants";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 interface TabIconProps {
   icon: ImageSourcePropType | undefined;
@@ -115,5 +116,3 @@ export default function TabsLayout() {
     </>
   );
 }
-
-const styles = StyleSheet.create({});

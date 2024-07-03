@@ -5,6 +5,7 @@ import {
   ReturnKeyTypeOptions,
   Image,
   TouchableOpacity,
+  TextInputProps,
 } from "react-native";
 import React, {useState} from "react";
 import {TextInput} from "react-native";
@@ -21,9 +22,10 @@ interface TextFormFieldProps {
   returnKeyType?: ReturnKeyTypeOptions;
   maxLength?: number;
   otherStyles?: string;
+  suffixIcon?: React.ReactNode;
 }
 
-const TextFormField: React.FC<TextFormFieldProps> = ({
+const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
   label,
   placeholder,
   value,
@@ -32,6 +34,8 @@ const TextFormField: React.FC<TextFormFieldProps> = ({
   secureTextEntry,
   onChangeText,
   returnKeyType,
+  suffixIcon,
+  ...props
 }) => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
@@ -48,6 +52,7 @@ const TextFormField: React.FC<TextFormFieldProps> = ({
           returnKeyType={returnKeyType}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry && !passwordVisibility}
+          {...props}
         />
         {secureTextEntry && (
           <TouchableOpacity
@@ -60,6 +65,7 @@ const TextFormField: React.FC<TextFormFieldProps> = ({
             />
           </TouchableOpacity>
         )}
+        {suffixIcon && suffixIcon}
       </View>
     </View>
   );

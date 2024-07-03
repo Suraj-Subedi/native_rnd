@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <>
-      <SafeAreaView className="bg-primary">
+      <SafeAreaView>
         <ScrollView contentContainerStyle={{height: "100%"}}>
           <View className="flex-col h-full p-4">
             <View className="justify-between flex-row">
@@ -43,7 +43,6 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <StatusBar style="light" backgroundColor="#161622" />
     </>
   );
 };

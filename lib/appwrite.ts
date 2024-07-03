@@ -63,9 +63,6 @@ const createAccount = async (user: UserProps) => {
 };
 
 const loginUser = async (user: Omit<UserProps, "name">) => {
-  if ((await account.listSessions()).total > 0) {
-    await account.deleteSession((await account.listSessions()).sessions[0].$id);
-  }
   await account
     .createEmailPasswordSession(user.email, user.password)
     .catch((error) => {
@@ -74,7 +71,10 @@ const loginUser = async (user: Omit<UserProps, "name">) => {
 };
 
 const getCurrentUser = async () => {
-  const currentAccount = await account.get();
+  const currentAccount = await account.get().catch((error) => {
+    console.log("Error: ", error);
+    return null;
+  });
   try {
     if (!currentAccount) throw Error;
     const user = await database.getDocument(
@@ -89,7 +89,8 @@ const getCurrentUser = async () => {
   } catch (error) {
     if (
       error instanceof AppwriteException &&
-      error.type === "document_not_found"
+      error.type === "document_not_found" &&
+      currentAccount
     ) {
       return createUserDocument(currentAccount);
     } else {
@@ -99,4 +100,11 @@ const getCurrentUser = async () => {
   }
 };
 
-export {client, account, createAccount, loginUser, getCurrentUser};
+//logout
+const logoutUser = async () => {
+  await account.deleteSessions().catch((error) => {
+    console.log("Error: ", error);
+  });
+};
+
+export {client, account, createAccount, loginUser, getCurrentUser, logoutUser};

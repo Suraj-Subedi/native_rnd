@@ -3,6 +3,7 @@ import React, {FC} from "react";
 import {Tabs} from "expo-router";
 import {icons} from "@/constants";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {StatusBar} from "expo-status-bar";
 
 interface TabIconProps {
   icon: ImageSourcePropType | undefined;
@@ -34,6 +35,7 @@ export default function TabsLayout() {
   return (
     <>
       <Tabs
+        sceneContainerStyle={{backgroundColor: "#161622"}}
         screenOptions={{
           tabBarShowLabel: false,
           tabBarActiveTintColor: "#FFA001",
@@ -113,6 +115,7 @@ export default function TabsLayout() {
           }}
         />
       </Tabs>
+      <StatusBar style="light" backgroundColor="#161622" />
     </>
   );
 }

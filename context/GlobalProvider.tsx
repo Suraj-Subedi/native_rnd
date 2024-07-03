@@ -48,7 +48,7 @@ const GlobalProvider = ({children}: {children: ReactNode}) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <GlobalContext.Provider

@@ -1,11 +1,13 @@
-import {View, Text, Image} from "react-native";
+import {View, Text, Image, Alert} from "react-native";
 import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {ScrollView} from "react-native";
 import {images} from "@/constants";
 import CustomButton from "@/components/CustomButton";
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
 import TextFormField from "@/components/TextFormField";
+import {account, createAccount} from "@/lib/appwrite";
+import {ID} from "react-native-appwrite";
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -16,11 +18,30 @@ const Register = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submitForm = () => {};
+  const submitForm = async () => {
+    if (!form.name || !form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+    setIsSubmitting(true);
+
+    const result = await createAccount(form)
+      .then(() => {
+        Alert.alert("Success", "Account created successfully");
+        router.replace("/home");
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
-        <View className="w-full justify-center h-full px-4 my-6">
+        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
           <Image
             source={images.logo}
             resizeMode="contain"

@@ -1,11 +1,12 @@
-import {View, Text, Image, KeyboardAvoidingView} from "react-native";
+import {View, Text, Image, KeyboardAvoidingView, Alert} from "react-native";
 import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {ScrollView} from "react-native";
 import {images} from "@/constants";
 import TextFormField from "@/components/TextFormField";
 import CustomButton from "@/components/CustomButton";
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
+import {loginUser} from "@/lib/appwrite";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -15,12 +16,30 @@ const Login = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submitForm = () => {};
+  const submitForm = async () => {
+    if (!form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+    setIsSubmitting(true);
+
+    const result = await loginUser(form)
+      .then(() => {
+        Alert.alert("Success", "User logged in successfully");
+        router.replace("/home");
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
-        <View className="w-full justify-center h-full px-4 my-6">
+        <View className="w-full justify-center min-h-[80vh] px-4 my-6">
           <Image
             source={images.logo}
             resizeMode="contain"

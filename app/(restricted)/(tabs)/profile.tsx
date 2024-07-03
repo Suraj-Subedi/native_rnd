@@ -44,6 +44,7 @@ const Profile = () => {
                   {
                     text: "Logout",
                     style: "destructive",
+                    isPreferred: true,
                     onPress: () => onLogout(),
                   },
                 ])

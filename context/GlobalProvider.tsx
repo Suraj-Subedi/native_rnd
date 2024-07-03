@@ -16,7 +16,14 @@ interface GlobalContextProps {
   setUser: (value: UserProps | null) => void;
 }
 
-const GlobalContext = createContext<GlobalContextProps | null>(null);
+const GlobalContext = createContext<GlobalContextProps>({
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+  isLoading: false,
+  setIsLoading: () => {},
+  user: null,
+  setUser: () => {},
+});
 export const useGlobalContext = () => useContext(GlobalContext);
 
 const GlobalProvider = ({children}: {children: ReactNode}) => {

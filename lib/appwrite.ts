@@ -63,6 +63,10 @@ const createAccount = async (user: UserProps) => {
 };
 
 const loginUser = async (user: Omit<UserProps, "name">) => {
+  const currentSession = await account.listSessions();
+  if (currentSession.total > 0) {
+    await logoutUser();
+  }
   await account
     .createEmailPasswordSession(user.email, user.password)
     .catch((error) => {

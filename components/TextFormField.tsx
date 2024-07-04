@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TextInputProps,
 } from "react-native";
-import React, {useState} from "react";
+import React, {RefObject, useState} from "react";
 import {TextInput} from "react-native";
 import {icons} from "@/constants";
 
@@ -42,9 +42,9 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
   return (
     <View className={`space-y-2 ${otherStyles}`}>
       <Text className="text-base text-gray-100 font-pmedium">{label}</Text>
-      <View className="border-2 border-black-200 w-full h-16 flex-row items-center px-4 bg-black-100 rounded-2xl focus:border-secondary-100 ">
+      <View className="border-2 border-black-100 w-full h-16 flex-row items-center bg-black-100 rounded-2xl focus:border-secondary ">
         <TextInput
-          className="flex-1 text-white font-psemibold text-sm"
+          className="flex-1 text-white font-pregular text-base h-full  px-4"
           value={value}
           keyboardType={keyboardType}
           placeholder={placeholder}
@@ -56,6 +56,7 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
         />
         {secureTextEntry && (
           <TouchableOpacity
+            className="mr-4"
             onPress={() => setPasswordVisibility(!passwordVisibility)}
           >
             <Image
@@ -65,7 +66,7 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
             />
           </TouchableOpacity>
         )}
-        {suffixIcon && suffixIcon}
+        {suffixIcon && <View className="mr-4">{suffixIcon}</View>}
       </View>
     </View>
   );

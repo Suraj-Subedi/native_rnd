@@ -1,4 +1,11 @@
-import {View, Text, Image, KeyboardAvoidingView, Alert} from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  Alert,
+  TextInput,
+} from "react-native";
 import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {ScrollView} from "react-native";
@@ -43,7 +50,7 @@ const Login = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
-        <View className="w-full justify-center min-h-[80vh] px-4 my-6">
+        <View className="w-full justify-center min-h-[70vh] px-4 my-6">
           <Image
             source={images.logo}
             resizeMode="contain"

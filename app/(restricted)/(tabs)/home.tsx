@@ -6,6 +6,7 @@ import {useGlobalContext} from "@/context/GlobalProvider";
 import {icons, images} from "@/constants";
 import TextFormField from "@/components/TextFormField";
 import VideoCard, {Video} from "@/components/VideoCard";
+import EmptyState from "@/components/EmptyState";
 
 const posts: Video[] = [
   {
@@ -32,7 +33,8 @@ const Home = () => {
       <SafeAreaView>
         {/* <ScrollView contentContainerStyle={{height: "100%"}}></ScrollView> */}
         <FlatList
-          data={posts}
+          // data={posts}
+          data={[] as Video[]}
           keyExtractor={(item) => item.id.toString()}
           renderItem={(data) => <VideoCard key={data.index} {...data.item} />}
           ListHeaderComponent={() => (
@@ -64,6 +66,12 @@ const Home = () => {
                 {"Trending Videos"}
               </Text>
             </View>
+          )}
+          ListEmptyComponent={() => (
+            <EmptyState
+              title={"No videos found"}
+              subtitle={"Upload new videos!"}
+            />
           )}
         />
       </SafeAreaView>

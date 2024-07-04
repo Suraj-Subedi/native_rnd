@@ -15,6 +15,7 @@ import VideoCard from "@/components/VideoCard";
 import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
 import useGetVideos from "@/data/useGetVideos";
+import Trending from "@/components/Trending";
 
 const Home = () => {
   const globalContext = useGlobalContext();
@@ -66,6 +67,7 @@ const Home = () => {
               <Text className="text-gray-100 text-base font-pregular  mt-10">
                 {"Trending Videos"}
               </Text>
+              <Trending videos={(data?.documents ?? []) as Video[]} />
             </View>
           )}
           ListEmptyComponent={() =>

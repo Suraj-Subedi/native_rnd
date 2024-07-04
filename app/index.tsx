@@ -33,13 +33,12 @@ const App = () => {
           />
           <View className="relative mt-5">
             <Text className="text-3xl text-center text-white font-bold ">
-              {"Discover Endless Possibilities with"}
+              {"Discover Endless Possibilities with "}
+              <Text className=" text-secondary-200 ">{"Futura"}</Text>
             </Text>
-            <Text className="text-3xl text-center text-secondary-200 font-bold ">
-              {"Futura"}
-            </Text>
+
             <Image
-              className="w-[136px] h-[15px] absolute -bottom-2 right-8"
+              className="w-[136px] h-[15px] absolute -bottom-2 -right-8"
               source={images.path}
               resizeMode="contain"
             />

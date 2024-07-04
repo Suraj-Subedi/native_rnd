@@ -31,7 +31,9 @@ client
   .setPlatform(config.platform);
 account = new Account(client);
 
-const createUserDocument = async (user: Models.User<Models.Preferences>) => {
+export const createUserDocument = async (
+  user: Models.User<Models.Preferences>
+) => {
   const avatarUrl = avatars.getInitials(user.name);
   const newUser = await database.createDocument(
     config.databaseId,
@@ -47,7 +49,7 @@ const createUserDocument = async (user: Models.User<Models.Preferences>) => {
   return newUser;
 };
 
-const createAccount = async (user: UserProps) => {
+export const createAccount = async (user: UserProps) => {
   try {
     const newAccount = await account.create(
       ID.unique(),
@@ -62,11 +64,12 @@ const createAccount = async (user: UserProps) => {
   }
 };
 
-const loginUser = async (user: Omit<UserProps, "name">) => {
-  const currentSession = await account.listSessions();
-  if (currentSession.total > 0) {
-    await logoutUser();
-  }
+export const loginUser = async (user: Omit<UserProps, "name">) => {
+  // const currentSession = await account.listSessions();
+  // console.log(currentSession);
+  // if (currentSession.total > 1) {
+  //   await logoutUser();
+  // }
   await account
     .createEmailPasswordSession(user.email, user.password)
     .catch((error) => {
@@ -74,7 +77,7 @@ const loginUser = async (user: Omit<UserProps, "name">) => {
     });
 };
 
-const getCurrentUser = async () => {
+export const getCurrentUser = async () => {
   const currentAccount = await account.get().catch((error) => {
     console.log("Error: ", error);
     return null;
@@ -105,10 +108,10 @@ const getCurrentUser = async () => {
 };
 
 //logout
-const logoutUser = async () => {
+export const logoutUser = async () => {
   await account.deleteSessions().catch((error) => {
     console.log("Error: ", error);
   });
 };
 
-export {client, account, createAccount, loginUser, getCurrentUser, logoutUser};
+export {account, database};

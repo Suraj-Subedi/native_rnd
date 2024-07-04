@@ -15,8 +15,8 @@ const EmptyState: FC<Props> = ({title, subtitle}) => {
         resizeMode={"contain"}
         className="h-[215px] w-[270px]"
       />
-      <Text className="text-gray-100 text-base  font-pmedium">{title}</Text>
-      <Text className="text-white  text-xl  font-psemibold">{subtitle}</Text>
+      <Text className="text-white text-xl  font-psemibold">{title}</Text>
+      <Text className="text-gray-100 text-sm font-pmedium">{subtitle}</Text>
     </View>
   );
 };

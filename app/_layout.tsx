@@ -2,8 +2,11 @@ import React, {useEffect} from "react";
 import {SplashScreen, Stack} from "expo-router";
 import {useFonts} from "expo-font";
 import GlobalProvider, {useGlobalContext} from "@/context/GlobalProvider";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -20,6 +23,8 @@ const RootLayout = () => {
 
   const globalContext = useGlobalContext();
 
+  console.log(globalContext?.isLoading);
+
   useEffect(() => {
     if (error) throw error;
     if (fontsLoaded && !globalContext?.isLoading) {
@@ -31,16 +36,18 @@ const RootLayout = () => {
 
   return (
     <>
-      <GlobalProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{headerShown: false}} />
-          <Stack.Screen name="(auth)" options={{headerShown: false}} />
-          <Stack.Screen
-            name="(restricted)/(tabs)"
-            options={{headerShown: false}}
-          />
-        </Stack>
-      </GlobalProvider>
+      <QueryClientProvider client={queryClient}>
+        <GlobalProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{headerShown: false}} />
+            <Stack.Screen name="(auth)" options={{headerShown: false}} />
+            <Stack.Screen
+              name="(restricted)/(tabs)"
+              options={{headerShown: false}}
+            />
+          </Stack>
+        </GlobalProvider>
+      </QueryClientProvider>
     </>
   );
 };

@@ -1,27 +1,18 @@
-export interface Video {
-  id: number;
-  title: string;
-  thumbnail: string;
-  prompt: string;
-  video: string;
-}
-
 import {View, Text, Image, TouchableOpacity} from "react-native";
 import React, {FC} from "react";
 import UserAvatar from "./UserAvatar";
 import {icons, images} from "@/constants";
+import {Video} from "@/interfaces/video";
 
-const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video}) => {
+const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video, users}) => {
   return (
-    <View className="w-full px-4">
+    <View className="w-full px-4 py-4 rounded-md">
       <View style={{columnGap: 16}} className="flex-row">
-        <UserAvatar />
+        <UserAvatar source={users.avatar} />
         <View className="flex-row items-center justify-between w-[77%]">
           <View style={{rowGap: 4}} className="flex-col ">
             <Text className="text-white text-base font-psemibold">{title}</Text>
-            <Text className="text-gray-100 font-pregular">
-              {"Suraj Subedi"}
-            </Text>
+            <Text className="text-gray-100 font-pregular">{users.name}</Text>
           </View>
           <TouchableOpacity>
             <Image
@@ -33,9 +24,9 @@ const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video}) => {
         </View>
       </View>
       <Image
-        className="w-full h-[250px] mt-2"
-        source={images.thumbnail}
-        resizeMode="contain"
+        className="w-full h-[200px] mt-4 clip rounded-lg"
+        source={{uri: thumbnail}}
+        resizeMode="cover"
       />
     </View>
   );

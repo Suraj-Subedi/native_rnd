@@ -1,7 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import {images} from "@/constants";
 import {useGlobalContext} from "@/context/GlobalProvider";
-import {Link, Redirect, router} from "expo-router";
+import {Link, Redirect, router, SplashScreen} from "expo-router";
 import {StatusBar} from "expo-status-bar";
 import {Image, ScrollView, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -11,6 +11,21 @@ const App = () => {
 
   if (!globalContext?.isLoading && globalContext?.isLoggedIn) {
     return <Redirect href={"/home"} />;
+  }
+
+  if (globalContext?.isLoading) {
+    return (
+      <>
+        <View className="w-full h-full justify-center items-center bg-primary">
+          <Image
+            source={images.logo}
+            className="w-[130px] h-[84px]"
+            resizeMode="contain"
+          />
+        </View>
+        <StatusBar style="light" />
+      </>
+    );
   }
 
   return (

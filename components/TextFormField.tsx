@@ -17,8 +17,6 @@ interface TextFormFieldProps {
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
   value?: string;
-  onChangeText?: (value: string) => void;
-  onSubmitEditing?: () => void;
   returnKeyType?: ReturnKeyTypeOptions;
   maxLength?: number;
   otherStyles?: string;
@@ -32,7 +30,6 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
   keyboardType = "default",
   otherStyles,
   secureTextEntry,
-  onChangeText,
   returnKeyType,
   suffixIcon,
   ...props
@@ -50,7 +47,6 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
           placeholder={placeholder}
           placeholderTextColor={"#7b7b8b"}
           returnKeyType={returnKeyType}
-          onChangeText={onChangeText}
           secureTextEntry={secureTextEntry && !passwordVisibility}
           {...props}
         />

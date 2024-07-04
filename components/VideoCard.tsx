@@ -1,8 +1,15 @@
-import {View, Text, Image, TouchableOpacity} from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import React, {FC, useState} from "react";
 import UserAvatar from "./UserAvatar";
 import {icons, images} from "@/constants";
 import {Video} from "@/interfaces/video";
+import {Video as ExpoVideo, ResizeMode} from "expo-av";
 
 const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video, users}) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -25,22 +32,44 @@ const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video, users}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => setIsPlaying(true)}
-        className="relative mt-4 w-full items-center justify-center"
-      >
-        <Image
-          className="w-full h-[200px] clip rounded-lg relative"
-          source={{uri: thumbnail}}
-          resizeMode="cover"
-        />
-        <Image
-          className="absolute h-12 w-12 "
-          source={icons.play}
-          resizeMode="contain"
-        />
-      </TouchableOpacity>
+      {isPlaying ? (
+        <ExpoVideo
+          className="w-full h-[200px]  rounded-[20px] mt-3 bg-white/10"
+          source={{
+            uri: video,
+          }}
+          progressUpdateIntervalMillis={1000}
+          resizeMode={ResizeMode.COVER}
+          shouldPlay
+          useNativeControls
+          onPlaybackStatusUpdate={(status) => {
+            if (status.isLoaded) {
+              if (status.didJustFinish) {
+                setIsPlaying(false);
+              }
+            }
+          }}
+        >
+          <ActivityIndicator className="h-full w-full" size="large" />
+        </ExpoVideo>
+      ) : (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => setIsPlaying(true)}
+          className="relative mt-4 w-full items-center justify-center"
+        >
+          <Image
+            className="w-full h-[200px] clip rounded-lg relative"
+            source={{uri: thumbnail}}
+            resizeMode="cover"
+          />
+          <Image
+            className="absolute h-12 w-12x "
+            source={icons.play}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

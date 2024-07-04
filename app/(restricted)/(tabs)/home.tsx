@@ -5,6 +5,8 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -16,12 +18,14 @@ import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
 import useGetVideos from "@/data/useGetVideos";
 import Trending from "@/components/Trending";
+import {router, usePathname} from "expo-router";
 
 const Home = () => {
   const globalContext = useGlobalContext();
   const [refreshing, setRefreshing] = useState(false);
-
+  const path = usePathname();
   const {isLoading, refetch, data} = useGetVideos();
+  const [query, setQuery] = useState<string>("");
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -34,7 +38,7 @@ const Home = () => {
 
   return (
     <>
-      <SafeAreaView className=" h-full">
+      <SafeAreaView className="h-full">
         <FlatList
           data={data?.documents as Video[]}
           keyExtractor={(item) => item.$id}
@@ -62,7 +66,27 @@ const Home = () => {
                 otherStyles={"mt-2"}
                 className="text-base font-pregular"
                 placeholderTextColor={"#CDCDE0"}
-                suffixIcon={<Image source={icons.search} className="w-4 h-4" />}
+                value={query}
+                onChangeText={(text) => setQuery(text)}
+                suffixIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (!query) {
+                        return Alert.alert(
+                          "Missing query",
+                          "Please enter a query"
+                        );
+                      }
+                      if (path === "/search") {
+                        router.setParams({query});
+                      } else {
+                        router.push(`/search/${query}`);
+                      }
+                    }}
+                  >
+                    <Image source={icons.search} className="w-4 h-4" />
+                  </TouchableOpacity>
+                }
               />
               <Text className="text-gray-100 text-base font-pregular  mt-10">
                 {"Trending Videos"}

@@ -1,4 +1,11 @@
-import {View, Text, Image, FlatList, RefreshControl} from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+} from "react-native";
 import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useGlobalContext} from "@/context/GlobalProvider";
@@ -20,9 +27,9 @@ const Home = () => {
     refetch().finally(() => setRefreshing(false));
   };
 
-  if (isLoading && !data) {
-    return <></>;
-  }
+  // if (isLoading && !data) {
+  //   return <></>;
+  // }
 
   return (
     <>
@@ -61,12 +68,16 @@ const Home = () => {
               </Text>
             </View>
           )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              title={"No videos found"}
-              subtitle={"Upload new videos!"}
-            />
-          )}
+          ListEmptyComponent={() =>
+            isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <EmptyState
+                title={"No videos found"}
+                subtitle={"Upload new videos!"}
+              />
+            )
+          }
           refreshControl={
             <RefreshControl
               colors={["#fff"]}

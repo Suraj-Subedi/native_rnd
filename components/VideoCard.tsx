@@ -1,12 +1,14 @@
 import {View, Text, Image, TouchableOpacity} from "react-native";
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import UserAvatar from "./UserAvatar";
 import {icons, images} from "@/constants";
 import {Video} from "@/interfaces/video";
 
 const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video, users}) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
-    <View className="w-full px-4 py-4 rounded-md">
+    <View className="w-full px-4 py-4 rounded-md ">
       <View style={{columnGap: 16}} className="flex-row">
         <UserAvatar source={users.avatar} />
         <View className="flex-row items-center justify-between w-[77%]">
@@ -23,11 +25,22 @@ const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video, users}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <Image
-        className="w-full h-[200px] mt-4 clip rounded-lg"
-        source={{uri: thumbnail}}
-        resizeMode="cover"
-      />
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => setIsPlaying(true)}
+        className="relative mt-4 w-full items-center justify-center"
+      >
+        <Image
+          className="w-full h-[200px] clip rounded-lg relative"
+          source={{uri: thumbnail}}
+          resizeMode="cover"
+        />
+        <Image
+          className="absolute h-12 w-12 "
+          source={icons.play}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
     </View>
   );
 };

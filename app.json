@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Futura",
-    "slug": "Futura",
+    "slug": "futura",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -32,6 +32,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b50110bc-9838-4571-b763-06ad0b090d52"
+      }
+    },
+    "owner": "suraj-subedi"
   }
 }

@@ -19,22 +19,18 @@ import {Video} from "@/interfaces/video";
 import useGetVideos from "@/data/useGetVideos";
 import Trending from "@/components/Trending";
 import {router, usePathname} from "expo-router";
+import SearchInput from "@/components/SearchInput";
 
 const Home = () => {
   const globalContext = useGlobalContext();
   const [refreshing, setRefreshing] = useState(false);
-  const path = usePathname();
+
   const {isLoading, refetch, data} = useGetVideos();
-  const [query, setQuery] = useState<string>("");
 
   const onRefresh = () => {
     setRefreshing(true);
     refetch().finally(() => setRefreshing(false));
   };
-
-  // if (isLoading && !data) {
-  //   return <></>;
-  // }
 
   return (
     <>
@@ -44,7 +40,7 @@ const Home = () => {
           keyExtractor={(item) => item.$id}
           renderItem={(data) => <VideoCard key={data.index} {...data.item} />}
           ListHeaderComponent={() => (
-            <View className="flex-colx p-4">
+            <View className="flex-col p-4">
               <View className="justify-between flex-row">
                 <View>
                   <Text className="font-pmedium text-gray-100 text-base">
@@ -61,32 +57,12 @@ const Home = () => {
                   className="h-12 w-12 mt-2"
                 />
               </View>
-              <TextFormField
+
+              <SearchInput
                 placeholder={"Search for a video topic"}
                 otherStyles={"mt-2"}
                 className="text-base font-pregular"
                 placeholderTextColor={"#CDCDE0"}
-                value={query}
-                onChangeText={(text) => setQuery(text)}
-                suffixIcon={
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (!query) {
-                        return Alert.alert(
-                          "Missing query",
-                          "Please enter a query"
-                        );
-                      }
-                      if (path === "/search") {
-                        router.setParams({query});
-                      } else {
-                        router.push(`/search/${query}`);
-                      }
-                    }}
-                  >
-                    <Image source={icons.search} className="w-4 h-4" />
-                  </TouchableOpacity>
-                }
               />
               <Text className="text-gray-100 text-base font-pregular  mt-10">
                 {"Trending Videos"}

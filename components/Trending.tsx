@@ -8,7 +8,7 @@ interface TrendingProps {
 }
 
 const Trending: FC<TrendingProps> = ({videos}) => {
-  const [activeItem, setActiveItem] = useState<Video>(videos[1]);
+  const [activeItem, setActiveItem] = useState<Video>(videos[0]);
 
   const vieableItemsChagned = (info: {viewableItems: ViewToken<Video>[]}) => {
     if (info.viewableItems.length > 0) {

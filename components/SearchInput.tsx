@@ -6,27 +6,26 @@ import {
   Image,
   TouchableOpacity,
   TextInputProps,
+  Alert,
 } from "react-native";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TextInput} from "react-native";
 import {icons} from "@/constants";
+import {router, useLocalSearchParams, usePathname} from "expo-router";
 
-interface TextFormFieldProps {
+interface SearchInputProps {
   label?: string;
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
-  secureTextEntry?: boolean;
-  value?: string;
   returnKeyType?: ReturnKeyTypeOptions;
   maxLength?: number;
   otherStyles?: string;
   suffixIcon?: React.ReactNode;
 }
 
-const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
+const SearchInput: React.FC<SearchInputProps & TextInputProps> = ({
   label,
   placeholder,
-  value,
   keyboardType = "default",
   otherStyles,
   secureTextEntry,
@@ -34,7 +33,21 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
   suffixIcon,
   ...props
 }) => {
+  const params = useLocalSearchParams();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [query, setQuery] = useState((params?.query as string) ?? "");
+  const path = usePathname();
+
+  const onSearch = () => {
+    if (!query && !path.startsWith("/search")) {
+      return Alert.alert("Missing query", "Please enter a query");
+    }
+    if (path.startsWith("/search")) {
+      router.setParams({query});
+    } else {
+      router.push(`/search/${query}`);
+    }
+  };
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
@@ -42,13 +55,15 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
       <View className="border-2 border-black-100 w-full h-16 flex-row items-center bg-black-100 rounded-2xl focus:border-secondary ">
         <TextInput
           className="flex-1 text-white font-pregular text-base h-full  px-4"
-          value={value}
+          value={query}
           keyboardType={keyboardType}
           placeholder={placeholder}
           placeholderTextColor={"#7b7b8b"}
-          returnKeyType={returnKeyType}
+          returnKeyType={returnKeyType ?? "search"}
           secureTextEntry={secureTextEntry && !passwordVisibility}
           {...props}
+          onChangeText={(text) => setQuery(text)}
+          onSubmitEditing={onSearch}
         />
         {secureTextEntry && (
           <TouchableOpacity
@@ -62,10 +77,20 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
             />
           </TouchableOpacity>
         )}
-        {suffixIcon && <View className="mr-4">{suffixIcon}</View>}
+        {suffixIcon ? (
+          suffixIcon
+        ) : (
+          <View className="mr-4">
+            {
+              <TouchableOpacity onPress={onSearch}>
+                <Image source={icons.search} className="w-4 h-4" />
+              </TouchableOpacity>
+            }
+          </View>
+        )}
       </View>
     </View>
   );
 };
 
-export default TextFormField;
+export default SearchInput;

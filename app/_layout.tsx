@@ -45,6 +45,23 @@ const RootLayout = () => {
               name="(restricted)/(tabs)"
               options={{headerShown: false}}
             />
+            <Stack.Screen
+              name="(restricted)/search/[query]"
+              options={{
+                headerShown: true,
+                headerBackTitleVisible: false,
+                headerTitle: "Search Results",
+                headerTitleStyle: {
+                  color: "#fff",
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 20,
+                },
+                headerTintColor: "#fff",
+                headerStyle: {
+                  backgroundColor: "#161622",
+                },
+              }}
+            />
           </Stack>
         </GlobalProvider>
       </QueryClientProvider>

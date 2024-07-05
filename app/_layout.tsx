@@ -23,8 +23,6 @@ const RootLayout = () => {
 
   const globalContext = useGlobalContext();
 
-  console.log(globalContext?.isLoading);
-
   useEffect(() => {
     if (error) throw error;
     if (fontsLoaded && !globalContext?.isLoading) {

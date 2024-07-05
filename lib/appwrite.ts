@@ -109,7 +109,7 @@ export const getCurrentUser = async () => {
 
 //logout
 export const logoutUser = async () => {
-  await account.deleteSessions().catch((error) => {
+  await account.deleteSession("current").catch((error) => {
     console.log("Error: ", error);
   });
 };

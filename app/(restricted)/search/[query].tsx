@@ -37,6 +37,7 @@ const Search = () => {
     <>
       <FlatList
         className="bg-primary"
+        contentContainerStyle={{paddingBottom: 20}}
         data={data?.documents as Video[]}
         keyExtractor={(item) => item.$id}
         renderItem={(data) => <VideoCard key={data.index} {...data.item} />}

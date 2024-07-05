@@ -19,8 +19,13 @@ const VideoCard: FC<Video> = ({id, title, thumbnail, prompt, video, users}) => {
       <View style={{columnGap: 16}} className="flex-row">
         <UserAvatar source={users.avatar} />
         <View className="flex-row items-center justify-between w-[77%]">
-          <View style={{rowGap: 4}} className="flex-col ">
-            <Text className="text-white text-base font-psemibold">{title}</Text>
+          <View style={{rowGap: 4}} className="flex-col max-w-[90%]">
+            <Text
+              numberOfLines={2}
+              className="text-white text-base font-psemibold "
+            >
+              {title}
+            </Text>
             <Text className="text-gray-100 font-pregular">{users.name}</Text>
           </View>
           <TouchableOpacity>

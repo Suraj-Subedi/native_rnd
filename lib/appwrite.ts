@@ -7,6 +7,7 @@ import {
   Databases,
   Models,
   AppwriteException,
+  Storage,
 } from "react-native-appwrite";
 
 export const config = {
@@ -24,6 +25,7 @@ let account: Account;
 client = new Client();
 const avatars = new Avatars(client);
 const database = new Databases(client);
+const storage = new Storage(client);
 
 client
   .setEndpoint(config.endpoint)
@@ -114,4 +116,4 @@ export const logoutUser = async () => {
   });
 };
 
-export {account, database};
+export {account, database, storage};

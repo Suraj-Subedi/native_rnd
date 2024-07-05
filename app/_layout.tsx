@@ -6,7 +6,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 
 SplashScreen.preventAutoHideAsync();
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({

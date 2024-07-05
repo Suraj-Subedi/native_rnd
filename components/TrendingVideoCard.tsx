@@ -59,6 +59,8 @@ const TrendingVideoCard: FC<Video & {activeVideo: Video}> = ({
           resizeMode={ResizeMode.COVER}
           shouldPlay
           useNativeControls
+          volume={3}
+          isMuted={false}
           onPlaybackStatusUpdate={(status) => {
             if (status.isLoaded) {
               if (status.didJustFinish) {

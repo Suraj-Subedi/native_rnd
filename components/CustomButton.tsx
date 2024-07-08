@@ -1,4 +1,10 @@
-import {View, Text, TouchableOpacity, ButtonProps} from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ButtonProps,
+  ActivityIndicator,
+} from "react-native";
 import React, {FC} from "react";
 
 interface CustomButtonProps {
@@ -24,9 +30,15 @@ const CustomButton: FC<CustomButtonProps & ButtonProps> = ({
         isLoading ? "opacity-50" : ""
       }`}
     >
-      <Text className={`font-psemibold text-lg text-primary ${textStyles}`}>
-        {title}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator size="small" color="white" />
+      ) : (
+        <Text
+          className={`font-psemibold text-lg text-white opacity-90 ${textStyles}`}
+        >
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

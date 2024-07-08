@@ -26,13 +26,9 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitForm = async () => {
-    if (!form.name || !form.email || !form.password) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
     setIsSubmitting(true);
 
-    const result = await createAccount(form)
+    const result = await createAccount(formik.values)
       .then(() => {
         Alert.alert("Success", "Account created successfully");
         router.replace("/home");

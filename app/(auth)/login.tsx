@@ -36,9 +36,8 @@ const Login = () => {
     setIsSubmitting(true);
     const result = await loginUser(formik.values)
       .then(() => {
-        setIsLoggedIn(true);
         Alert.alert("Success", "User logged in successfully");
-
+        setIsLoggedIn(true);
         router.replace("/home");
       })
       .catch((error) => {

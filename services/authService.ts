@@ -1,6 +1,7 @@
 import {UserProps} from "@/context/GlobalProvider";
 import {account, avatars, config, database} from "@/lib/appwrite";
 import {AppwriteException, ID, Models} from "react-native-appwrite";
+import {MutateFunction, useMutation} from "react-query";
 
 export const createUserDocument = async (
   user: Models.User<Models.Preferences>
@@ -54,7 +55,7 @@ export const getCurrentUser = async () => {
     return null;
   });
   try {
-    if (!currentAccount) throw Error;
+    if (!currentAccount) return null;
     const user = await database.getDocument(
       config.databaseId,
       config.userCollectionId,
@@ -63,7 +64,10 @@ export const getCurrentUser = async () => {
 
     if (!user) {
     }
-    return user;
+    return {
+      ...user,
+      isVerified: currentAccount.emailVerification,
+    };
   } catch (error) {
     if (
       error instanceof AppwriteException &&
@@ -84,3 +88,5 @@ export const logoutUser = async () => {
     console.log("Error: ", error);
   });
 };
+
+//mutation function for useMutation

@@ -9,8 +9,18 @@ import {SafeAreaView} from "react-native-safe-area-context";
 const App = () => {
   const globalContext = useGlobalContext();
 
-  if (!globalContext?.isLoading && globalContext?.isLoggedIn) {
+  if (
+    !globalContext?.isLoading &&
+    globalContext?.isLoggedIn &&
+    globalContext?.user?.isVerified
+  ) {
     return <Redirect href={"/home"} />;
+  } else if (
+    !globalContext?.isLoading &&
+    globalContext?.isLoggedIn &&
+    !globalContext?.user?.isVerified
+  ) {
+    return <Redirect href={"/email-verify"} />;
   }
 
   if (globalContext?.isLoading) {

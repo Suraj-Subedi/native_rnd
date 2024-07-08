@@ -39,7 +39,7 @@ const Profile = () => {
       })
       .finally(() => {
         setIsLoggingOut(false);
-        router.push("/login");
+        router.replace("/login");
       });
   };
 

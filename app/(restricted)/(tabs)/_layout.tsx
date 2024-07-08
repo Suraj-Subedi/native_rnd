@@ -65,13 +65,13 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name="create"
+          name="add"
           options={{
             headerShown: false,
             tabBarIcon: ({color, focused}) => {
               return (
                 <TabIcon
-                  name="Create"
+                  name="Add"
                   color={color}
                   focused={focused}
                   icon={icons.plus}

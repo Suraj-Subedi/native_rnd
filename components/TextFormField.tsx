@@ -22,7 +22,7 @@ interface TextFormFieldProps {
   otherStyles?: string;
   suffixIcon?: React.ReactNode;
   customContent?: React.ReactNode;
-  error?: string;
+  error?: string | false;
 }
 
 const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({

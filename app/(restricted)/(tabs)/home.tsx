@@ -13,7 +13,6 @@ import {useGlobalContext} from "@/context/GlobalProvider";
 import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
 import SearchInput from "@/components/SearchInput";
-import {images} from "@/constants";
 
 const Home = () => {
   const globalContext = useGlobalContext();

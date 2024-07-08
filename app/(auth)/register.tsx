@@ -7,14 +7,22 @@ import CustomButton from "@/components/CustomButton";
 import {Link, router} from "expo-router";
 import TextFormField from "@/components/TextFormField";
 import {createAccount} from "@/services";
+import * as yup from "yup";
+import {useFormik} from "formik";
+
+const registerFormSchema = yup.object().shape({
+  name: yup.string().required("Full name is required"),
+  email: yup
+    .string()
+    .email("Please enter a valid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+});
 
 const Register = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitForm = async () => {
@@ -37,6 +45,16 @@ const Register = () => {
       });
   };
 
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: registerFormSchema,
+    onSubmit: submitForm,
+  });
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
@@ -55,8 +73,9 @@ const Register = () => {
             placeholder="Enter your full name"
             otherStyles="mt-10"
             keyboardType="default"
-            value={form.name}
-            onChangeText={(value) => setForm({...form, name: value})}
+            error={formik.errors.name}
+            value={formik.values.name}
+            onChangeText={(value) => formik.setFieldValue("name", value)}
             returnKeyType="next"
           />
           <TextFormField
@@ -64,8 +83,9 @@ const Register = () => {
             placeholder="Enter your email address"
             otherStyles="mt-5"
             keyboardType="email-address"
-            value={form.email}
-            onChangeText={(value) => setForm({...form, email: value})}
+            error={formik.errors.email}
+            value={formik.values.email}
+            onChangeText={(value) => formik.setFieldValue("email", value)}
             returnKeyType="next"
           />
 
@@ -74,13 +94,14 @@ const Register = () => {
             placeholder="Enter your password"
             otherStyles="mt-5"
             secureTextEntry
-            value={form.password}
-            onChangeText={(value) => setForm({...form, password: value})}
+            value={formik.values.password}
+            error={formik.errors.password}
+            onChangeText={(value) => formik.setFieldValue("password", value)}
             returnKeyType="done"
           />
           <CustomButton
             containerStyles="mt-7"
-            onPress={submitForm}
+            onPress={() => formik.handleSubmit()}
             title={"Register"}
             isLoading={isSubmitting}
           />

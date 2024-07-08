@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from "react-native";
+import {View, Text, TouchableOpacity, ButtonProps} from "react-native";
 import React, {FC} from "react";
 
 interface CustomButtonProps {
@@ -9,7 +9,7 @@ interface CustomButtonProps {
   isLoading?: boolean;
 }
 
-const CustomButton: FC<CustomButtonProps> = ({
+const CustomButton: FC<CustomButtonProps & ButtonProps> = ({
   title,
   onPress,
   containerStyles,

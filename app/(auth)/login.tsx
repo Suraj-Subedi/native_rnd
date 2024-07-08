@@ -15,24 +15,26 @@ import CustomButton from "@/components/CustomButton";
 import {Link, router} from "expo-router";
 import {loginUser} from "@/services";
 import {useGlobalContext} from "@/context/GlobalProvider";
+import * as yup from "yup";
+import {useFormik} from "formik";
 
+const loginFormSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+});
 const Login = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {setIsLoggedIn} = useGlobalContext();
 
   const submitForm = async () => {
-    if (!form.email || !form.password) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
     setIsSubmitting(true);
-
-    const result = await loginUser(form)
+    const result = await loginUser(formik.values)
       .then(() => {
         setIsLoggedIn(true);
         Alert.alert("Success", "User logged in successfully");
@@ -46,6 +48,15 @@ const Login = () => {
         setIsSubmitting(false);
       });
   };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginFormSchema,
+    onSubmit: submitForm,
+  });
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -64,8 +75,9 @@ const Login = () => {
             placeholder="Enter your email address"
             otherStyles="mt-10"
             keyboardType="email-address"
-            value={form.email}
-            onChangeText={(value) => setForm({...form, email: value})}
+            value={formik.values.email}
+            error={formik.errors.email}
+            onChangeText={(value) => formik.setFieldValue("email", value)}
             returnKeyType="next"
           />
 
@@ -74,16 +86,18 @@ const Login = () => {
             placeholder="Enter your password"
             otherStyles="mt-5"
             secureTextEntry
-            value={form.password}
-            onChangeText={(value) => setForm({...form, password: value})}
+            value={formik.values.password}
+            error={formik.errors.password}
+            onChangeText={(value) => formik.setFieldValue("password", value)}
             returnKeyType="done"
           />
           <CustomButton
+            onPress={() => formik.handleSubmit()}
             containerStyles="mt-7"
-            onPress={submitForm}
             title={"Login"}
             isLoading={isSubmitting}
           />
+
           <View className="justify-center">
             <Text className="text-gray-100 mt-7 text-center text-sm font-pregular">
               Don't have an account?{" "}

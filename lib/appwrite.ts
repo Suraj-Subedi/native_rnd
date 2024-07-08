@@ -1,23 +1,20 @@
-import {UserProps} from "@/context/GlobalProvider";
 import {
   Client,
   Account,
-  ID,
   Avatars,
   Databases,
-  Models,
-  AppwriteException,
   Storage,
 } from "react-native-appwrite";
 
 export const config = {
   endpoint: "https://cloud.appwrite.io/v1",
-  platform: "np.com.subedisuraj.futura",
-  projectId: "6684ee4f000e58b1ccde",
-  databaseId: "6684f876000a920d1a49",
-  userCollectionId: "6684f89900088ef82ef4",
+  platform: "np.com.subedisuraj.spendsmart",
+  projectId: "668b89d0002e992412be",
+  databaseId: "668b908100004da14e75",
+  userCollectionId: "668b909d00127194f827",
   videoCollectionId: "6684f887002309abc1db",
-  bucketId: "6684f9eb003c2152f40f",
+  transactionCollectionId: "668b90af00362763ff62",
+  bucketId: "668b90da00011499db93",
 };
 
 let client;
@@ -33,87 +30,4 @@ client
   .setPlatform(config.platform);
 account = new Account(client);
 
-export const createUserDocument = async (
-  user: Models.User<Models.Preferences>
-) => {
-  const avatarUrl = avatars.getInitials(user.name);
-  const newUser = await database.createDocument(
-    config.databaseId,
-    config.userCollectionId,
-    user.$id,
-    {
-      accountId: user.$id,
-      email: user.email,
-      name: user.name,
-      avatar: avatarUrl,
-    }
-  );
-  return newUser;
-};
-
-export const createAccount = async (user: UserProps) => {
-  try {
-    const newAccount = await account.create(
-      ID.unique(),
-      user.email,
-      user.password,
-      user.name
-    );
-    if (!newAccount) throw Error;
-    return await createUserDocument(newAccount);
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const loginUser = async (user: Omit<UserProps, "name">) => {
-  // const currentSession = await account.listSessions();
-  // console.log(currentSession);
-  // if (currentSession.total > 1) {
-  //   await logoutUser();
-  // }
-  await account
-    .createEmailPasswordSession(user.email, user.password)
-    .catch((error) => {
-      throw error;
-    });
-};
-
-export const getCurrentUser = async () => {
-  const currentAccount = await account.get().catch((error) => {
-    console.log("Error: ", error);
-    return null;
-  });
-  try {
-    if (!currentAccount) throw Error;
-    const user = await database.getDocument(
-      config.databaseId,
-      config.userCollectionId,
-      currentAccount.$id
-    );
-
-    if (!user) {
-    }
-    return user;
-  } catch (error) {
-    if (
-      error instanceof AppwriteException &&
-      error.type === "document_not_found" &&
-      currentAccount
-    ) {
-      return createUserDocument(currentAccount);
-    } else {
-      console.log("Error: ", error);
-      console.log(error);
-    }
-  }
-};
-
-//logout
-export const logoutUser = async () => {
-  await account.deleteSession("current").catch((error) => {
-    console.log("Error: ", error);
-  });
-};
-
-export {account, database, storage};
+export {account, database, storage, avatars, client};

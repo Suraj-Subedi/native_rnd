@@ -14,7 +14,6 @@ import {icons, images} from "@/constants";
 // import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import {Video as ExpoVideo, ResizeMode} from "expo-av";
-import usePostVideoMutation from "@/data/usePostVideoMutation";
 import {useGlobalContext} from "@/context/GlobalProvider";
 const Create = () => {
   const [form, setForm] = useState<{
@@ -29,7 +28,6 @@ const Create = () => {
     prompt: "",
   });
 
-  const {mutate, isLoading, isError} = usePostVideoMutation();
   const {user} = useGlobalContext();
 
   const openPicker = async (type: "video" | "thumbnail") => {
@@ -59,13 +57,13 @@ const Create = () => {
         return;
       }
 
-      mutate({
-        title: form.title,
-        video: form.video,
-        thumbnail: form.thumbnail,
-        prompt: form.prompt,
-        userId: user?.$id,
-      });
+      // mutate({
+      //   title: form.title,
+      //   video: form.video,
+      //   thumbnail: form.thumbnail,
+      //   prompt: form.prompt,
+      //   userId: user?.$id,
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +162,7 @@ const Create = () => {
             onChangeText={(prompt) => setForm({...form, prompt})}
           />
           <CustomButton
-            isLoading={isLoading}
+            // isLoading={isLoading}
             containerStyles="mt-7"
             title="Submit & Publish"
             onPress={submitForm}

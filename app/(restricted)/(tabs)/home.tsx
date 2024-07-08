@@ -10,11 +10,8 @@ import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useGlobalContext} from "@/context/GlobalProvider";
 
-import VideoCard from "@/components/VideoCard";
 import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
-import useGetVideos from "@/data/useGetVideos";
-import Trending from "@/components/Trending";
 import SearchInput from "@/components/SearchInput";
 import {images} from "@/constants";
 
@@ -22,12 +19,10 @@ const Home = () => {
   const globalContext = useGlobalContext();
   const [refreshing, setRefreshing] = useState(false);
 
-  const {isLoading, refetch, data} = useGetVideos();
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    refetch().finally(() => setRefreshing(false));
-  };
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   refetch().finally(() => setRefreshing(false));
+  // };
 
   return (
     <>
@@ -35,9 +30,9 @@ const Home = () => {
         <FlatList
           className="bg-primary"
           contentContainerStyle={{paddingBottom: 10}}
-          data={data?.documents as Video[]}
+          data={[] as Video[]}
           keyExtractor={(item) => item.$id}
-          renderItem={(data) => <VideoCard key={data.index} {...data.item} />}
+          renderItem={(data) => <></>}
           ListHeaderComponent={() => (
             <View className="flex-col p-4">
               <View className="justify-between flex-row">
@@ -50,11 +45,11 @@ const Home = () => {
                   </Text>
                 </View>
 
-                <Image
-                  source={images.logoSmall}
+                {/* <Image
+                  source={images.}
                   resizeMode="contain"
                   className="h-12 w-12 mt-2"
-                />
+                /> */}
               </View>
 
               <SearchInput
@@ -63,14 +58,10 @@ const Home = () => {
                 className="text-base font-pregular"
                 placeholderTextColor={"#CDCDE0"}
               />
-              <Text className="text-gray-100 text-base font-pregular  mt-10">
-                {"Trending Videos"}
-              </Text>
-              <Trending videos={(data?.documents ?? []) as Video[]} />
             </View>
           )}
           ListEmptyComponent={() =>
-            isLoading ? (
+            false ? (
               <ActivityIndicator size="small" color="#fff" />
             ) : (
               <EmptyState
@@ -83,7 +74,7 @@ const Home = () => {
             <RefreshControl
               colors={["#fff"]}
               tintColor={"#fff"}
-              onRefresh={onRefresh}
+              // onRefresh={onRefresh}
               refreshing={refreshing}
             />
           }

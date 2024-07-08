@@ -18,8 +18,8 @@ const App = () => {
       <>
         <View className="w-full h-full justify-center items-center bg-primary">
           <Image
-            source={images.logo}
-            className="w-[130px] h-[84px]"
+            source={images.smartLogo}
+            className="w-[150px] h-[150px]"
             resizeMode="contain"
           />
         </View>
@@ -35,39 +35,33 @@ const App = () => {
           height: "100%",
         }}
       >
-        <View className="w-full justify-center items-center min-h[85vh] px-4">
+        <View
+          style={{
+            rowGap: 16,
+          }}
+          className="w-full justify-center items-center  h-[80vh] px-4"
+        >
           <Image
-            source={images.logo}
-            className="w-[130px] h-[84px]"
+            source={images.smartLogo}
+            className="w-[150px] h-[150px]"
             resizeMode="contain"
           />
-          <Image
-            source={images.cards}
-            className="max-w-[380px] w-full h-[300px]"
-            resizeMode="contain"
-          />
+
           <View className="relative mt-5">
             <Text className="text-3xl text-center text-white font-bold ">
-              {"Discover Endless Possibilities with "}
-              <Text className=" text-secondary-200 ">{"Futura"}</Text>
+              {"Track your every penny with "}
+              <Text className=" text-secondary-200">{"Spend Smart"}</Text>
             </Text>
-
-            <Image
-              className="w-[136px] h-[15px] absolute -bottom-2 -right-8"
-              source={images.path}
-              resizeMode="contain"
-            />
           </View>
           <Text className="text-gray-100 mt-7 text-center text-sm font-pregular">
-            Where creativity meets innovation: embark on a journey of limitless
-            exploration with Futura
+            {"Start your journey with us"}
           </Text>
           <CustomButton
-            title="Continue with Email"
+            title="Get Started"
             onPress={() => {
               router.push("/login");
             }}
-            containerStyles="w-full mt-10"
+            containerStyles="w-full mt-10 absolute bottom-0"
           />
         </View>
       </ScrollView>

@@ -13,7 +13,7 @@ import {images} from "@/constants";
 import TextFormField from "@/components/TextFormField";
 import CustomButton from "@/components/CustomButton";
 import {Link, router} from "expo-router";
-import {loginUser} from "@/lib/appwrite";
+import {loginUser} from "@/services";
 import {useGlobalContext} from "@/context/GlobalProvider";
 
 const Login = () => {
@@ -52,12 +52,12 @@ const Login = () => {
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
         <View className="w-full justify-center min-h-[70vh] px-4 my-6">
           <Image
-            source={images.logo}
+            source={images.smartLogo}
             resizeMode="contain"
-            className="w-[115px] h-[35px]"
+            className="w-[115px] h-[115px]"
           />
-          <Text className="font-psemibold text-2xl mt-10 text-white">
-            Login to Futura
+          <Text className="font-psemibold text-2xl mt-5 text-white">
+            Login to Spend Smart
           </Text>
           <TextFormField
             label="Email Address"

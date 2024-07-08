@@ -1,4 +1,4 @@
-import {getCurrentUser} from "@/lib/appwrite";
+import {getCurrentUser} from "@/services";
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import {Alert} from "react-native";
 

@@ -6,8 +6,7 @@ import {images} from "@/constants";
 import CustomButton from "@/components/CustomButton";
 import {Link, router} from "expo-router";
 import TextFormField from "@/components/TextFormField";
-import {account, createAccount} from "@/lib/appwrite";
-import {ID} from "react-native-appwrite";
+import {createAccount} from "@/services";
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -43,12 +42,12 @@ const Register = () => {
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
         <View className="w-full justify-center min-h-[85vh] px-4 my-6">
           <Image
-            source={images.logo}
+            source={images.smartLogo}
             resizeMode="contain"
-            className="w-[115px] h-[35px]"
+            className="w-[115px] h-[115px]"
           />
-          <Text className="font-psemibold text-2xl mt-10 text-white">
-            Register to Futura
+          <Text className="font-psemibold text-2xl mt-5 text-white">
+            Register to Spend Smart
           </Text>
 
           <TextFormField

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Futura",
-    "slug": "futura",
+    "name": "Spend Smart",
+    "slug": "spendSmart",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "futura",
+    "scheme": "spendSmart",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "package": "np.com.subedisuraj.futura"
+      "package": "np.com.subedisuraj.spendsmart"
     },
     "android": {
       "adaptiveIcon": {

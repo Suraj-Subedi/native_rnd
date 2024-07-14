@@ -13,10 +13,15 @@ import {useGlobalContext} from "@/context/GlobalProvider";
 import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
 import SearchInput from "@/components/SearchInput";
+import {Transaction} from "@/interfaces/transaction";
+import useGetLatestTransactions from "@/lib/data/getLatestTransactions";
+import TransactionCard from "@/components/molecules/TransactionCard";
 
 const Home = () => {
   const globalContext = useGlobalContext();
   const [refreshing, setRefreshing] = useState(false);
+
+  const {data, isLoading} = useGetLatestTransactions();
 
   // const onRefresh = () => {
   //   setRefreshing(true);
@@ -29,9 +34,9 @@ const Home = () => {
         <FlatList
           className="bg-primary"
           contentContainerStyle={{paddingBottom: 10}}
-          data={[] as Video[]}
+          data={data?.documents as Transaction[]}
           keyExtractor={(item) => item.$id}
-          renderItem={(data) => <></>}
+          renderItem={(data) => <TransactionCard {...data.item} />}
           ListHeaderComponent={() => (
             <View className="flex-col p-4">
               <View className="justify-between flex-row">
@@ -43,12 +48,6 @@ const Home = () => {
                     {globalContext?.user?.name}
                   </Text>
                 </View>
-
-                {/* <Image
-                  source={images.}
-                  resizeMode="contain"
-                  className="h-12 w-12 mt-2"
-                /> */}
               </View>
 
               <SearchInput
@@ -57,10 +56,13 @@ const Home = () => {
                 className="text-base font-pregular"
                 placeholderTextColor={"#CDCDE0"}
               />
+              <Text className="text-gray-100 text-base font-pregular  mt-10">
+                {"Latest Transactions"}
+              </Text>
             </View>
           )}
           ListEmptyComponent={() =>
-            false ? (
+            isLoading ? (
               <ActivityIndicator size="small" color="#fff" />
             ) : (
               <EmptyState

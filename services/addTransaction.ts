@@ -3,7 +3,7 @@ import {config, database} from "@/lib/appwrite";
 import {router} from "expo-router";
 import {Alert} from "react-native";
 import {AppwriteException, ID} from "react-native-appwrite";
-import {useMutation} from "react-query";
+import {useMutation, useQueryClient} from "react-query";
 
 interface CreateTransactionProps {
   title: string;
@@ -16,6 +16,7 @@ interface CreateTransactionProps {
 
 export default function useAddTransaction() {
   const {user} = useGlobalContext();
+  const queryClient = useQueryClient();
   return useMutation(
     async (transaction: CreateTransactionProps) => {
       await database.createDocument(
@@ -34,6 +35,7 @@ export default function useAddTransaction() {
         Alert.alert("Success", "Transaction added successfully");
         router.replace("/home");
         variables.resetForm();
+        queryClient.invalidateQueries("recent-transactions");
       },
       onError: (error) => {
         if (error instanceof AppwriteException) {

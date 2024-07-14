@@ -75,7 +75,7 @@ const Login = () => {
             otherStyles="mt-10"
             keyboardType="email-address"
             value={formik.values.email}
-            error={formik.errors.email}
+            error={formik.touched.email && formik.errors.email}
             onChangeText={(value) => formik.setFieldValue("email", value)}
             returnKeyType="next"
           />
@@ -86,7 +86,7 @@ const Login = () => {
             otherStyles="mt-5"
             secureTextEntry
             value={formik.values.password}
-            error={formik.errors.password}
+            error={formik.touched.password && formik.errors.password}
             onChangeText={(value) => formik.setFieldValue("password", value)}
             returnKeyType="done"
           />

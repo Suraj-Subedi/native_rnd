@@ -28,7 +28,7 @@ const Register = () => {
   const submitForm = async () => {
     setIsSubmitting(true);
 
-    const result = await createAccount(formik.values)
+    const result = await createAccount(values)
       .then(() => {
         Alert.alert("Success", "Account created successfully");
         router.replace("/home");
@@ -41,7 +41,13 @@ const Register = () => {
       });
   };
 
-  const formik = useFormik({
+  const {
+    setFieldValue,
+    values,
+    errors,
+    touched,
+    submitForm: formikSubmitForm,
+  } = useFormik({
     initialValues: {
       name: "",
       email: "",
@@ -69,9 +75,9 @@ const Register = () => {
             placeholder="Enter your full name"
             otherStyles="mt-10"
             keyboardType="default"
-            error={formik.errors.name}
-            value={formik.values.name}
-            onChangeText={(value) => formik.setFieldValue("name", value)}
+            error={touched.name && errors.name}
+            value={values.name}
+            onChangeText={(value) => setFieldValue("name", value)}
             returnKeyType="next"
           />
           <TextFormField
@@ -79,9 +85,9 @@ const Register = () => {
             placeholder="Enter your email address"
             otherStyles="mt-5"
             keyboardType="email-address"
-            error={formik.errors.email}
-            value={formik.values.email}
-            onChangeText={(value) => formik.setFieldValue("email", value)}
+            error={touched.email && errors.email}
+            value={values.email}
+            onChangeText={(value) => setFieldValue("email", value)}
             returnKeyType="next"
           />
 
@@ -90,14 +96,14 @@ const Register = () => {
             placeholder="Enter your password"
             otherStyles="mt-5"
             secureTextEntry
-            value={formik.values.password}
-            error={formik.errors.password}
-            onChangeText={(value) => formik.setFieldValue("password", value)}
+            value={values.password}
+            error={touched.password && errors.password}
+            onChangeText={(value) => setFieldValue("password", value)}
             returnKeyType="done"
           />
           <CustomButton
             containerStyles="mt-7"
-            onPress={() => formik.handleSubmit()}
+            onPress={() => formikSubmitForm()}
             title={"Register"}
             isLoading={isSubmitting}
           />

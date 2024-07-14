@@ -4,7 +4,6 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  ActivityIndicator,
   RefreshControl,
   FlatList,
 } from "react-native";
@@ -15,8 +14,6 @@ import {useGlobalContext} from "@/context/GlobalProvider";
 import {logoutUser} from "@/services";
 import {router} from "expo-router";
 import UserAvatar from "@/components/UserAvatar";
-import StatsCard from "@/components/StatsCard";
-import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces";
 import Spinner from "react-native-loading-spinner-overlay";
 
@@ -97,22 +94,9 @@ const Profile = () => {
                   columnGap: 40,
                 }}
                 className="justify-center flex flex-row mt-5"
-              >
-                {/* <StatsCard title={"Posts"} value={"0"} />
-                <StatsCard title={"Views"} value={"1.2k"} /> */}
-              </View>
+              ></View>
             </>
           )}
-          ListEmptyComponent={() =>
-            false ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <EmptyState
-                title={"No transaction found"}
-                subtitle={"Add a new transaction!"}
-              />
-            )
-          }
           refreshControl={
             <RefreshControl
               colors={["#fff"]}

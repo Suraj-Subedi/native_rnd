@@ -17,18 +17,12 @@ const TransactionCard: FC<Transaction> = ({
   const timeAgo = moment(created_date).fromNow();
   return (
     <View className="m-4 p-2 bg-primary border-2 border-black-200 rounded-lg">
-      <Text className="text-white font-psemibold">{title}</Text>
       <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <Text
-            className={`text-xs text-white font-pmedium
-
-            }`}
-          >
-            {timeAgo}
-          </Text>
+        <View className="flex-col">
+          <Text className="text-white font-psemibold">{title}</Text>
+          <Text className={`text-xs text-white font-pmedium}`}>{timeAgo}</Text>
         </View>
-        <Text></Text>
+
         <View>
           <Text
             className={`text-lg text-white font-pmedium ${
@@ -37,7 +31,16 @@ const TransactionCard: FC<Transaction> = ({
           >
             {(isExpense ? "-" : "+") + amount}
           </Text>
+          <View></View>
+          <Text className="text-white text-xs text-right w-full">
+            {secondary_type}
+          </Text>
         </View>
+      </View>
+      <View>
+        <Text className="text-white text-xs">
+          {is_recurring ? "Monthly" : ""}
+        </Text>
       </View>
     </View>
   );

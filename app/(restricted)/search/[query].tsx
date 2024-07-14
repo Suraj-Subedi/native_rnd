@@ -1,29 +1,27 @@
 import {View, FlatList, RefreshControl, ActivityIndicator} from "react-native";
-import React, {useState} from "react";
-import {useGlobalContext} from "@/context/GlobalProvider";
+import React from "react";
 import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
 import {useLocalSearchParams} from "expo-router";
 import SearchInput from "@/components/SearchInput";
+import useGetTransactions from "@/lib/data/getTransactions";
+import {Transaction} from "@/interfaces/transaction";
+import TransactionCard from "@/components/molecules/TransactionCard";
 
 const Search = () => {
-  const globalContext = useGlobalContext();
-  const [refreshing, setRefreshing] = useState(false);
   const {query} = useLocalSearchParams();
-
-  const onRefresh = () => {
-    // setRefreshing(true);
-    // refetch().finally(() => setRefreshing(false));
-  };
+  const {data, isLoading, refetch, isRefetching} = useGetTransactions({
+    search: query as string,
+  });
 
   return (
     <>
       <FlatList
         className="bg-primary"
         contentContainerStyle={{paddingBottom: 20}}
-        data={[] as Video[]}
+        data={data?.documents as Transaction[]}
         keyExtractor={(item) => item.$id}
-        renderItem={(data) => <></>}
+        renderItem={(data) => <TransactionCard {...data.item} />}
         ListHeaderComponent={() => (
           <View className="flex-col p-4">
             <SearchInput
@@ -34,7 +32,7 @@ const Search = () => {
           </View>
         )}
         ListEmptyComponent={() =>
-          false ? (
+          isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
             <EmptyState
@@ -47,8 +45,8 @@ const Search = () => {
           <RefreshControl
             colors={["#fff"]}
             tintColor={"#fff"}
-            onRefresh={onRefresh}
-            refreshing={refreshing}
+            onRefresh={() => refetch()}
+            refreshing={isRefetching}
           />
         }
       />

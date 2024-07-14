@@ -157,7 +157,7 @@ const Create = () => {
                       )
                     }
                     items={
-                      form.primaryType === "Income"
+                      form.primaryType === "income"
                         ? secondaryIncomes
                         : secondaryExpenses
                     }

@@ -14,14 +14,14 @@ import EmptyState from "@/components/EmptyState";
 import {Video} from "@/interfaces/video";
 import SearchInput from "@/components/SearchInput";
 import {Transaction} from "@/interfaces/transaction";
-import useGetLatestTransactions from "@/lib/data/getLatestTransactions";
 import TransactionCard from "@/components/molecules/TransactionCard";
+import useGetRecentTransactions from "@/lib/data/getRecentTransactions";
 
 const Home = () => {
   const globalContext = useGlobalContext();
   const [refreshing, setRefreshing] = useState(false);
 
-  const {data, isLoading} = useGetLatestTransactions();
+  const {data, isLoading} = useGetRecentTransactions();
 
   // const onRefresh = () => {
   //   setRefreshing(true);
@@ -57,7 +57,7 @@ const Home = () => {
                 placeholderTextColor={"#CDCDE0"}
               />
               <Text className="text-gray-100 text-base font-pregular  mt-10">
-                {"Latest Transactions"}
+                {"Recent Transactions"}
               </Text>
             </View>
           )}

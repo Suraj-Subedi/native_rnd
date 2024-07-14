@@ -52,7 +52,7 @@ const Home = () => {
               </View>
 
               <SearchInput
-                placeholder={"Search for a video topic"}
+                placeholder={"Search for your transaction"}
                 otherStyles={"mt-2"}
                 className="text-base font-pregular"
                 placeholderTextColor={"#CDCDE0"}
@@ -64,8 +64,8 @@ const Home = () => {
               <ActivityIndicator size="small" color="#fff" />
             ) : (
               <EmptyState
-                title={"No videos found"}
-                subtitle={"Upload new videos!"}
+                title={"No transaction found"}
+                subtitle={"Add a new transaction"}
               />
             )
           }

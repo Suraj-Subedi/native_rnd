@@ -98,8 +98,8 @@ const Profile = () => {
                 }}
                 className="justify-center flex flex-row mt-5"
               >
-                <StatsCard title={"Posts"} value={"0"} />
-                <StatsCard title={"Views"} value={"1.2k"} />
+                {/* <StatsCard title={"Posts"} value={"0"} />
+                <StatsCard title={"Views"} value={"1.2k"} /> */}
               </View>
             </>
           )}
@@ -108,8 +108,8 @@ const Profile = () => {
               <ActivityIndicator size="small" color="#fff" />
             ) : (
               <EmptyState
-                title={"No videos found"}
-                subtitle={"Upload new videos!"}
+                title={"No transaction found"}
+                subtitle={"Add a new transaction!"}
               />
             )
           }

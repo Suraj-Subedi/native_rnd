@@ -27,7 +27,7 @@ const Search = () => {
         ListHeaderComponent={() => (
           <View className="flex-col p-4">
             <SearchInput
-              placeholder={"Search for a video topic"}
+              placeholder={"Search for a transaction"}
               className="text-base font-pregular"
               placeholderTextColor={"#CDCDE0"}
             />
@@ -38,8 +38,8 @@ const Search = () => {
             <ActivityIndicator size="small" color="#fff" />
           ) : (
             <EmptyState
-              title={"No videos found"}
-              subtitle={"Upload new videos!"}
+              title={"No transaction found"}
+              subtitle={"Add new transaction!"}
             />
           )
         }

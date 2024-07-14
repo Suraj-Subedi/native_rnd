@@ -48,9 +48,9 @@ const TextFormField: React.FC<TextFormFieldProps & TextInputProps> = ({
           customContent
         ) : (
           <View
-            className={`border-2 border-black-100 w-full h-16 flex-row items-center bg-black-100 rounded-2xl focus:border-secondary ${
-              error && "border-red-500 "
-            }`}
+            className={`border-2 border-black-100 w-full h-16 flex-row items-center bg-black-100 rounded-2xl focus:border-secondary
+              ${error && "border-red-500 "}
+              `}
           >
             <TextInput
               className="flex-1 text-white font-pregular text-base h-full  px-4"

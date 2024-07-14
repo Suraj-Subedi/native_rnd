@@ -1,57 +1,27 @@
 import {View, Text, ScrollView, Alert, Switch} from "react-native";
-import React, {useState} from "react";
+import React from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import TextFormField from "@/components/TextFormField";
 import CustomButton from "@/components/CustomButton";
-// import * as DocumentPicker from "expo-document-picker";
-import * as ImagePicker from "expo-image-picker";
-import {useGlobalContext} from "@/context/GlobalProvider";
 import {RadioButton} from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
 import * as yup from "yup";
 import {useFormik} from "formik";
+import {primaryTypes, secondaryExpenses, secondaryIncomes} from "@/lib/data";
+import useAddTransaction from "@/services/addTransaction";
 
 const createFormSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   primaryType: yup.string().required("Primary type is required"),
   secondaryType: yup.string().required("Secondary type is required"),
   isRecurring: yup.boolean().optional(),
+  amount: yup.number().required("Amount is required"),
 });
 
 const Create = () => {
-  const {user} = useGlobalContext();
+  // const {user} = useGlobalContext();
 
-  const onSave = () => {
-    try {
-      // mutate({
-      //   title: form.title,
-      //   video: form.video,
-      //   thumbnail: form.thumbnail,
-      //   prompt: form.prompt,
-      //   userId: user?.$id,
-      // });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const primaryTypes = [
-    {label: "Expense", value: "Expense"},
-    {label: "Income", value: "Income"},
-  ];
-
-  const secondaryExpenses = [
-    {label: "Salary", value: "Salary"},
-    {label: "General", value: "General"},
-    {label: "Subscriptions", value: "Subscriptions"},
-    {label: "Others", value: "Others"},
-  ];
-
-  const secondaryIncomes = [
-    {label: "Capital", value: "Capital"},
-    {label: "Profit", value: "Profit"},
-    {label: "Others", value: "Others"},
-  ];
+  const {mutate, isLoading} = useAddTransaction();
 
   const {
     values: form,
@@ -59,15 +29,28 @@ const Create = () => {
     errors,
     submitForm,
     touched,
+    resetForm,
   } = useFormik({
     initialValues: {
       title: "",
       primaryType: "",
       secondaryType: "",
       isRecurring: false,
+      amount: null as number | null,
     },
     validationSchema: createFormSchema,
-    onSubmit: onSave,
+    onSubmit: (values) => {
+      mutate({
+        amount: Number(values.amount),
+        general_type: values.primaryType,
+        is_recurring: values.isRecurring,
+        secondary_type: values.secondaryType,
+        title: values.title,
+        resetForm: () => {
+          resetForm();
+        },
+      });
+    },
   });
 
   return (
@@ -166,6 +149,7 @@ const Create = () => {
                         fontWeight: "400",
                       },
                     }}
+                    value={form.secondaryType}
                     onValueChange={(value) =>
                       setFieldValue(
                         "secondaryType",
@@ -187,7 +171,6 @@ const Create = () => {
               "mt-7 text-base font-pregular flex-row items-center justify-between"
             }
             label={"Is Recurring every month?"}
-            placeholder="The AI prompt of your video ..."
             error={errors.isRecurring}
             customContent={
               <>
@@ -200,8 +183,19 @@ const Create = () => {
               </>
             }
           />
+          <TextFormField
+            otherStyles={"mt-7 text-base font-pregular"}
+            label={"Amount"}
+            value={form.amount?.toString()}
+            onChangeText={(amount) => setFieldValue("amount", amount)}
+            keyboardType="number-pad"
+            placeholder="Enter the transaction amount"
+            error={touched.amount && errors.amount}
+          />
         </View>
         <CustomButton
+          disabled={isLoading}
+          isLoading={isLoading}
           containerStyles="mt-10 mx-4"
           onPress={() => submitForm()}
           title={"Save Transaction"}
